@@ -19,8 +19,12 @@ const db = require("./connection");
 db.once("open", () => console.log("Connected to db"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 const auth_router = require("./authentication/routes");
+const subs_mgmt_router = require("./subs_mgmt/routes");
+
 app.post("/loggingUser", auth_router);
 app.post("/registerUser", auth_router);
+
+app.use("/",subs_mgmt_router);
 // Set public folder as root
 /*
 app.use(express.static("public"));

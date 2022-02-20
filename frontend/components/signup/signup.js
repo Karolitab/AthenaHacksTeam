@@ -91,7 +91,7 @@ form.addEventListener('submit', (e)=>{
     console.log(passwordValue);
     console.log(nameValue);
     const payload = {
-        name: nameValue,
+        username: nameValue,
         email: emailValue,
         password: passwordValue,
     }

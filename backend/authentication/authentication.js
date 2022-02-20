@@ -60,8 +60,6 @@ exports.registerUser = async (req, res) => {
     status: "logged in",
     visit: "first",
 	subscriptions: [],
-    start: [],
-    renewal: [],
     password: req.body.password,
     email: req.body.email,
   };

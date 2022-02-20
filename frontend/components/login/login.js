@@ -1,3 +1,4 @@
+const buttonLogin= document.querySelector(".login");
 const inputEmail2 = document.querySelector('#form3Example3c3');
 const form = document.querySelector('form');
 const inputName = document.querySelector('#form3Example1c');
@@ -33,11 +34,16 @@ inputEmail2.addEventListener('keyup', (e)=>{
     }
 }
 
- const buttonState= document.querySelector(".state");
  const inputEmail= document.querySelector("#form3Example3c3");
-
- let state="";
- buttonState.addEventListener("click", ()=>{
+form.addEventListener('submit', (e)=>{
+    if( emailValidation(e)){
+        emailValidation(e);
+    }else{
+        e.preventDefault()
+    }
+ })
+ 
+ buttonLogin.addEventListener("click", (e)=>{
     const emailValue = inputEmail.value;
     const passwordValue = inputPassword.value;
     let errorMessage = "";
@@ -55,6 +61,8 @@ inputEmail2.addEventListener('keyup', (e)=>{
          //successfully logged in
          errorMessage = "Success";
          console.log(response.data);
+         localStorage.setItem("subs", JSON.stringify(response.data.subscriptions));
+          window.location.replace("../app/app2.html");
        } else {
          console.log("Some error ocurred");
          errorMessage = 'failure';
