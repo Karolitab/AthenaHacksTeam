@@ -1,0 +1,29 @@
+//calls for testing backend during production
+
+REGISTER USER:
+curl -X POST http://localhost:8080/registerUser -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","password":"brrr","username":"Brrr"}'
+curl -X POST http://localhost:8080/registerUser -H "Content-type: application/json" -d '{"email":"New@gmail.com","password":"new","username":"new"}'
+
+LOGIN USER:
+curl -X POST http://localhost:8080/loggingUser -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","password":"brrr","status":"logging in"}'
+curl -X POST http://localhost:8080/loggingUser -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","password":"brrr","status":"logging out"}'
+curl -X POST http://localhost:8080/loggingUser -H "Content-type: application/json" -d '{"email":"New@gmail.com","password":"new","status":"logging in"}'
+curl -X POST http://localhost:8080/loggingUser -H "Content-type: application/json" -d '{"email":"New@gmail.com","password":"new","status":"logging out"}'
+
+GET SUBS LIST
+curl -X GET http://localhost:8080/getSubs/Brrr@gmail.com
+curl -X POST http://localhost:8080/getSubs/New@gmail.com
+
+ADD TO SUBS LIST
+curl -X POST http://localhost:8080/addSubs -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","subscription":"Netflix","start":"11/11/2021","renewal":6}'
+curl -X POST http://localhost:8080/addSubs -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","subscription":"Spotify","start":"12/12/2021","renewal":4}'
+curl -X POST http://localhost:8080/addSubs -H "Content-type: application/json" -d '{"email":"New@gmail.com","subscription":"Prime","start":"02/05/2022","renewal":3}'
+
+DELETE FROM SUBS LIST
+curl -X POST http://localhost:8080/deleteSubs -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","subscription":"Netflix","start":"11/11/2021","renewal":6}'
+curl -X POST http://localhost:8080/deleteSubs -H "Content-type: application/json" -d '{"email":"New@gmail.com","subscription":"Prime","start":"02/05/2022","renewal":3}'
+
+CHANGE SUBS LIST
+
+curl -X POST http://localhost:8080/changeSubs -H "Content-type: application/json" -d '{"email":"New@gmail.com","oldsubscription":"Prime","oldstart":"02/05/2022","oldrenewal":3,"newsubscription":"Spotify","newstart":"02/01/2022","newrenewal":2}'
+
