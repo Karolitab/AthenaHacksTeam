@@ -1,5 +1,7 @@
 const inputEmail2 = document.querySelector('#form3Example3c3');
 const form = document.querySelector('form');
+const inputName = document.querySelector('#form3Example1c');
+const inputPassword = document.querySelector('#form3Example4c')
 
 
 inputEmail2.addEventListener('keyup', (e)=>{
@@ -32,18 +34,12 @@ inputEmail2.addEventListener('keyup', (e)=>{
 }
 
 
-form.addEventListener('submit', (e)=>{
-    if( emailValidation(e)){ 
-        emailValidation(e);
-    }else{
-        e.preventDefault()
-    }
- })
+
 
 
  const buttonState= document.querySelector(".state");
  const inputEmail= document.querySelector("#form3Example3c3");
- const inputPassword= document.querySelector("#form3Example4c")
+
  let state="";
  buttonState.addEventListener("click", ()=>{
     const emailValue = inputEmail.value;
@@ -59,34 +55,35 @@ form.addEventListener('submit', (e)=>{
      axios.post("http://localhost:8080/loggingUser", payload)
      .then((response) => {
        console.log(response);
-      /* if (response.status === 200) {
+       if (response.status === 200) {
          //successfully logged in
          errorMessage = "Success";
          console.log(response.data);
        } else {
          console.log("Some error ocurred");
          errorMessage = 'failure';
-         */
-      // }
+         
+       }
      })
      .catch((error) => {
        console.log(error);
        // backend sends error due to wrong password
-      /** if (error.response.status === 403) {
-        errorMessage = "Wrong password"
+       if (error.response.status === 404) {
+        errorMessage = "Invalid Credentials"
         console.log(errorMessage);
+        
        }
        //backend sends error due to unregistered email
-       /*else if (error.response.status === 401) {
-         errorMessage = "Not registered";
-         console.log(errorMessage);
-       } else {
-        errorMessage = "Error";
-        console.log(errorMessage);
-       }
-       */
+       
      });
  });
 
  /** BACKEND*/
 
+ form.addEventListener('submit', (e)=>{
+  if( emailValidation(e)){ 
+      emailValidation(e);
+  } else{
+      e.preventDefault()
+  }
+})

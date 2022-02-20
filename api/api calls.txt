@@ -1,0 +1,22 @@
+//calls for testing backend during production
+
+REGISTER USER:
+curl -X POST http://localhost:8080/registerUser -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","password":"brrr","username":"Brrr"}'
+
+LOGIN USER:
+curl -X POST http://localhost:8080/loggingUser -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","password":"brrr","status":"logging in"}'
+curl -X POST http://localhost:8080/loggingUser -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","password":"brrr","status":"logging out"}'
+
+
+GET SUBS LIST
+curl -X GET http://localhost:8080/getSubs/Brrr@gmail.com 
+
+USER JOINING A (CHAT) ROOM:
+curl -X POST http://localhost:8080/joinedroom -H "Content-type: application/json" -d '{"email":"Brrr@gmail.com","room":"https://crossroads.aaaaaaaf"}'
+
+ADDING A MESSAGE TO A CHAT ROOM:
+curl -X POST http://localhost:8080/addchat -H "Content-type: application/json" -d '{"roomId":"https://crossroads.aaaaaaaf","username":"Brrr","email":"Brrr@gmail.com","msg":"Brrr.Testing"}'
+
+GETTING CHATLIST OF USER:
+
+videolinkhttps://www.veed.io/download/2106d862-4ed0-4417-ae22-b72b0e22efed
