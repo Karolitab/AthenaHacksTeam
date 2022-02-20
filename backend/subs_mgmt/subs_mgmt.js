@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
 dotenv.config();
+const accountSid = "AC97c5362537e8030f89db1853d5e62415";
+const authToken = "88cac80584dd0b65acb4ed119dab0ca1";
+const client = require('twilio')(accountSid, authToken);
 
 const users = require("../models/user_model.js");
 
@@ -40,6 +43,19 @@ users.findOneAndUpdate(
             .status(404)
             .send("Cannot add subscription . Maybe user was not found!");
         } else {
+        	
+            var str='Deadline for '+obj.subscription+' subscription has approached!';
+          
+              client.messages
+              .create({
+                 body: 'Deadline approaching',
+                 from: '+19106598964',
+                 to: '+917595825944'
+               })
+              .then(message => console.log(message.sid))
+              .catch(error=>console.log(error));
+              
+            
           res.status(201).send(data);
         }
       })

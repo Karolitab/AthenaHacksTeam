@@ -1,40 +1,107 @@
 subs = JSON.parse(localStorage.getItem("subs") || "[]");
+valemail = localStorage.getItem("email");
 console.log(subs);
 
 
-var table = document.getElementById("table");
-var header = table.createTHead();
-var row = header.insertRow(0);    
-row.insertCell(0).outerHTML="<th>"+"#"+"</th>";
-row.insertCell(1).outerHTML="<th>"+"Subs_name"+"</th>";
-row.insertCell(2).outerHTML="<th>"+"start"+"</th>";
-row.insertCell(3).outerHTML="<th>"+"renewal(in months)"+"</th>";
-row.insertCell(4).outerHTML="<th>"+"options"+"</th>";
-var body = table.createTBody();
-// Create an empty <tr> element and add it to the 1st position of the table:
+var body = document.querySelector(".tablebody");
+
 for(let i=0;i<subs.length;i++)
 {
 
-var row = body.insertRow(i);
- row.insertCell(0).outerHTML = "<th>"+(i+1)+"</th>";
-// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-var cell1 = row.insertCell(1);
-var cell2 = row.insertCell(2);
-var cell3 = row.insertCell(3);
-var cell4 =row.insertCell(4);
-
-// Add some text to the new cells:
-cell1.innerHTML = subs[i].subscription;
-cell2.innerHTML = subs[i].start;
-cell3.innerHTML = subs[i].renewal;
-      
-var html = '<ul class="list-inline m-0">';
- html += '<li class="list-inline-item"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Add"><i class="fa fa-edit"></i></button></li>';
-html += '<li class="list-inline-item"><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-trash"></i> </button></li>';
-html += '</ul>';
-cell4.innerHTML = html;
+var row = body.innerHTML+= '<tr>' + '<td>' + subs[i].subscription +  '</td>' + 
+                                '<td>' + subs[i].start +  '</td>' +
+                                '<td>' + subs[i].renewal +  '</td>' +
+                                '<td>' +  '<a class="add" title="Add" data-toggle="tooltip">' + '<i class="material-icons">' + '&#xE03B;' + 
+                                '</i>' + '</a>'
+                                 + '<a class="edit" title="edit" data-toggle="tooltip">' + '<i class="material-icons">' + '&#xE254;' + 
+                                 '</i>' + '</a>' +
+                                 '<a class="delete" title="delete" data-toggle="tooltip">' + '<i class="material-icons">' + '&#xE872;' + 
+                                  '</i>' + '</a>'
+                                   +  '</td>' +
+                                '</tr>'
 
 }
+$(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip();
+	var actions = $("table td:last-child").html();
+	// Append table with add row form on add new button click
+    $(".add-new").click(function(){
+		$(this).attr("disabled", "disabled");
+		var index = $("table tbody tr:last-child").index();
+        var row = '<tr>' +
+            '<td><input type="text" class="form-control" name="name" id="name" oninput="show()"></td>' +
+            '<td><input type="text" class="form-control" name="department" id="department"></td>' +
+            '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
+			'<td>' + actions + '</td>' +
+        '</tr>';
+    	$("table").append(row);		
+		$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+	// Add row on add button click
+	$(document).on("click", ".add", function(){
+		var empty = false;
 
-
-  
+		var input = $(this).parents("tr").find('input[type="text"]');
+		const payload = {
+		email: valemail,
+        subscription: document.getElementById('name').value,
+        start: document.getElementById('department').value,
+        renewal: document.getElementById('phone').value,
+    }
+     axios.post("http://localhost:8080/addSubs", payload)
+     .then((response) => {
+       console.log(response);
+       if (response.status === 201) {
+         //successfully logged in
+         errorMessage = "Success";
+         console.log(response.data);
+         localStorage.setItem("subs", JSON.stringify(response.data.subscriptions));
+          window.location.replace("../app/app2.html");
+       } else {
+         console.log("Some error ocurred");
+         errorMessage = 'failure';
+         
+       }
+     })
+     .catch((error) => {
+       console.log(error);
+       // backend sends error due to wrong password
+       if (error.response.status === 404) {
+        errorMessage = "Invalid Credentials"
+        console.log(errorMessage);
+       }
+       })
+	
+        input.each(function(){
+			if(!$(this).val()){
+				$(this).addClass("error");
+				empty = true;
+			} else{
+			   
+                $(this).removeClass("error");
+            }
+		});
+		$(this).parents("tr").find(".error").first().focus();
+		if(!empty){
+			input.each(function(){
+				$(this).parent("td").html($(this).val());
+			});			
+			$(this).parents("tr").find(".add, .edit").toggle();
+			$(".add-new").removeAttr("disabled");
+		}		
+    });
+	// Edit row on edit button click
+	$(document).on("click", ".edit", function(){		
+        $(this).parents("tr").find("td:not(:last-child)").each(function(){
+			$(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+		});		
+		$(this).parents("tr").find(".add, .edit").toggle();
+		$(".add-new").attr("disabled", "disabled");
+    });
+	// Delete row on delete button click
+	$(document).on("click", ".delete", function(){
+        $(this).parents("tr").remove();
+		$(".add-new").removeAttr("disabled");
+    });
+});

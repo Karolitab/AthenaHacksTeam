@@ -62,6 +62,7 @@ form.addEventListener('submit', (e)=>{
          errorMessage = "Success";
          console.log(response.data);
          localStorage.setItem("subs", JSON.stringify(response.data.subscriptions));
+         localStorage.setItem("email",emailValue);
           window.location.replace("../app/app2.html");
        } else {
          console.log("Some error ocurred");

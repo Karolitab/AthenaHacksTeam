@@ -7,6 +7,7 @@ const users = new Schema(
     visit: { type: String },
     status: {type: String},
     password: { type: String },
+    phone: {type: String},
     email: { type: String },
     subscriptions: [{_id: Schema.Types.ObjectId, subscription:{type:String},start:{type:Date},renewal:{type:Number} }],
 

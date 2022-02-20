@@ -57,6 +57,7 @@ exports.loggingUser = async (req, res) => {
 exports.registerUser = async (req, res) => {
   let obj = {
     user_name: req.body.username,
+    phone :req.body.phone,
     status: "logged in",
     visit: "first",
 	subscriptions: [],
