@@ -10,16 +10,9 @@ exports.loggingUser = async (req, res) => {
   if (req.body.status === "logging in") {
     //if user is logging in
     let password = req.body.password;
-    await users.findOne({ email: req.body.email }, (err, user) => {
-      if (err) {
-        return res.status(400).json({ success: false, error: err });
-      } else if (user === null) {
-        res.status(401).send("You haven't registered. Sign in first");
-      } else {
-        if (user.password === password) {
-          users
+    users
             .findOneAndUpdate(
-              { email: req.body.email },
+              { email: req.body.email , password: req.body.password},
               { status: "logged in" },
               { useFindAndModify: false }
             )
@@ -27,7 +20,7 @@ exports.loggingUser = async (req, res) => {
               if (!data) {
                 res
                   .status(404)
-                  .send("Cannot update status . Maybe user was not found!");
+                  .send("Cannot update status . Maybe user was not found, or invalid password!");
               } else {
                 // console.log(data);
                 res.status(200).send(data);
@@ -35,12 +28,8 @@ exports.loggingUser = async (req, res) => {
             })
             .catch((err) => {
               res.status(404).send("Error updating user log-in status");
-            });
-        } else {
-          res.status(403).send("Wrong password. Try again!");
-        }
-      }
-    });
+            });    
+    
   } else {
     //user is logging out. Just email is required to set the status in the document
     users
