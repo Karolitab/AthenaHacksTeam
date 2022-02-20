@@ -33,10 +33,6 @@ inputEmail2.addEventListener('keyup', (e)=>{
     }
 }
 
-
-
-
-
  const buttonState= document.querySelector(".state");
  const inputEmail= document.querySelector("#form3Example3c3");
 
@@ -71,19 +67,9 @@ inputEmail2.addEventListener('keyup', (e)=>{
        if (error.response.status === 404) {
         errorMessage = "Invalid Credentials"
         console.log(errorMessage);
-        
        }
        //backend sends error due to unregistered email
        
      });
  });
 
- /** BACKEND*/
-
- form.addEventListener('submit', (e)=>{
-  if( emailValidation(e)){ 
-      emailValidation(e);
-  } else{
-      e.preventDefault()
-  }
-})

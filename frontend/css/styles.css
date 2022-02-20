@@ -11383,3 +11383,24 @@ header.masthead .bg-circle-4 {
     font-size: 3rem;
   }
 }
+.valid {
+  position: relative;
+}
+
+.not-valid {
+  position: relative;
+  color: red;
+}
+
+.not-valid .error-border {
+  border: 1px solid red;
+}
+
+.not-valid legend {
+  color: red;
+}
+.backgroundimage{
+  background-image: url("https://cdn3.pitchfork.com/longform/683/Year_In_Streaming_v2.jpg");
+}
+
+
