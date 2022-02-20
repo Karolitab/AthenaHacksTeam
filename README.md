@@ -1,2 +1,2 @@
-# AthenaHacks
- project
+# itSubscribe
+ your one stop solution to managing all your subscriptions
