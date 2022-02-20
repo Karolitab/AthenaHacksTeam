@@ -1,5 +1,6 @@
 subs = JSON.parse(localStorage.getItem("subs") || "[]");
 console.log(subs);
+const table = document.querySelector(".table")
 
 
 var body = document.querySelector(".tablebody");
@@ -20,6 +21,8 @@ var row = body.innerHTML+= '<tr>' + '<td>' + subs[i].subscription +  '</td>' +
                                 '</tr>'
 
 }
+
+function functionality(){
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 	var actions = $("table td:last-child").html();
@@ -33,14 +36,18 @@ $(document).ready(function(){
             '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
 			'<td>' + actions + '</td>' +
         '</tr>';
+    
     	$("table").append(row);		
 		$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
         $('[data-toggle="tooltip"]').tooltip();
+
     });
 	// Add row on add button click
 	$(document).on("click", ".add", function(){
 		var empty = false;
 		var input = $(this).parents("tr").find('input[type="text"]');
+        const val = document.querySelector('input').value;
+        console.log(val)
         input.each(function(){
 			if(!$(this).val()){
 				$(this).addClass("error");
@@ -72,3 +79,6 @@ $(document).ready(function(){
 		$(".add-new").removeAttr("disabled");
     });
 });
+}
+functionality();
+
