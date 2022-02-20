@@ -8,9 +8,8 @@ const users = new Schema(
     status: {type: String},
     password: { type: String },
     email: { type: String },
-    subscriptions: [{type:String }],
-    start: [{type:Date }],
-    renewal: [{type: Number}]
+    subscriptions: [{_id: Schema.Types.ObjectId, subscription:{type:String},start:{type:Date},renewal:{type:Number} }],
+
   },
   { timestamps: true }
 );

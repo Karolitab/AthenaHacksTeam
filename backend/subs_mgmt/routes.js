@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/getSubs/:email", Subs_mgmt.getSubs);
 router.post("/addSubs", Subs_mgmt.addSubs);
-router.post("/changeSubs", Subs_mgmt.changeSubs);
-router.post("/deleteSubs", Subs_mgmt.deleteSubs);
+router.post("/changeSubs",Subs_mgmt.changeSubs);
+router.post("/deleteSubs",Subs_mgmt.deleteSubs);
 
 module.exports = router;
